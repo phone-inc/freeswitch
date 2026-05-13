@@ -82,11 +82,39 @@ FreeSWITCH version: 1.11.0-release+git~20260507T215558Z~aae20f9fcd~64bit
 
 ## Install
 
+Create the install prefix before running `make install`. `/opt` is owned by root on macOS, so creating `/opt/freeswitch` requires `sudo`. Change ownership afterward so the normal, non-root build user can install files into it:
+
+```sh
+sudo mkdir -p /opt/freeswitch
+sudo chown -R `id -u`:`id -g` /opt/freeswitch
+```
+
 Install FreeSWITCH into `/opt/freeswitch`:
 
 ```sh
 make install
 ```
+
+Install the sample configuration and htdocs explicitly after `make install`. This safely adds missing files such as `freeswitch.xml` without overwriting existing config files:
+
+```sh
+make samples-conf samples-htdocs
+```
+
+Fix runtime library lookup for `mod_verto` and `mod_signalwire`, which link to Homebrew's SignalWire libraries via `@rpath`:
+
+```sh
+install_name_tool -add_rpath /opt/homebrew/lib /opt/freeswitch/lib/freeswitch/mod/mod_verto.so
+install_name_tool -add_rpath /opt/homebrew/lib /opt/freeswitch/lib/freeswitch/mod/mod_signalwire.so
+```
+
+Verify the installed runtime starts:
+
+```sh
+/opt/freeswitch/bin/freeswitch -c -nonat -nosql
+```
+
+On macOS, `ERROR: Could not set nice level` can appear when running without elevated priority permissions. It is non-fatal if FreeSWITCH continues starting.
 
 Optional sound prompts and music on hold:
 
