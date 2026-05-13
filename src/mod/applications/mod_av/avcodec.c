@@ -1227,7 +1227,7 @@ static switch_status_t open_encoder(h264_codec_context_t *context, uint32_t widt
 
 	if (context->encoder_ctx) {
 		if (avcodec_is_open(context->encoder_ctx)) {
-#if (LIBAVCODEC_VERSION_MAJOR < LIBAVCODEC_7_V)
+#if (LIBAVCODEC_VERSION_MAJOR < LIBAVCODEC_V)
 			avcodec_close(context->encoder_ctx);
 #else
 			/* avcodec_close() will be called in avcodec_free_context() */
@@ -1326,7 +1326,7 @@ FF_ENABLE_DEPRECATION_WARNINGS
 
 		if (context->encoder_ctx) {
 			if (avcodec_is_open(context->encoder_ctx)) {
-#if (LIBAVCODEC_VERSION_MAJOR < LIBAVCODEC_7_V)
+#if (LIBAVCODEC_VERSION_MAJOR < LIBAVCODEC_V)
 				avcodec_close(context->encoder_ctx);
 #else
 				/* avcodec_close() will be called in avcodec_free_context() */
@@ -1884,7 +1884,7 @@ static switch_status_t switch_h264_destroy(switch_codec_t *codec)
 	switch_buffer_destroy(&context->nalu_buffer);
 	if (context->decoder_ctx) {
 		if (avcodec_is_open(context->decoder_ctx)) {
-#if (LIBAVCODEC_VERSION_MAJOR < LIBAVCODEC_7_V)
+#if (LIBAVCODEC_VERSION_MAJOR < LIBAVCODEC_V)
 				avcodec_close(context->decoder_ctx);
 #else
 				/* avcodec_close() will be called in avcodec_free_context() */
@@ -1899,7 +1899,7 @@ static switch_status_t switch_h264_destroy(switch_codec_t *codec)
 
 	if (context->encoder_ctx) {
 		if (avcodec_is_open(context->encoder_ctx)) {
-#if (LIBAVCODEC_VERSION_MAJOR < LIBAVCODEC_7_V)
+#if (LIBAVCODEC_VERSION_MAJOR < LIBAVCODEC_V)
 			avcodec_close(context->encoder_ctx);
 #else
 			/* avcodec_close() will be called in avcodec_free_context() */

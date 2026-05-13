@@ -1,0 +1,53 @@
+diff --git a/src/mod/applications/mod_av/avcodec.c b/src/mod/applications/mod_av/avcodec.c
+index a9d449b562..062a2dd4c3 100644
+--- a/src/mod/applications/mod_av/avcodec.c
++++ b/src/mod/applications/mod_av/avcodec.c
+@@ -1227,7 +1227,7 @@ static switch_status_t open_encoder(h264_codec_context_t *context, uint32_t widt
+ 
+ 	if (context->encoder_ctx) {
+ 		if (avcodec_is_open(context->encoder_ctx)) {
+-#if (LIBAVCODEC_VERSION_MAJOR < LIBAVCODEC_7_V)
++#if (LIBAVCODEC_VERSION_MAJOR < LIBAVCODEC_V)
+ 			avcodec_close(context->encoder_ctx);
+ #else
+ 			/* avcodec_close() will be called in avcodec_free_context() */
+@@ -1326,7 +1326,7 @@ FF_ENABLE_DEPRECATION_WARNINGS
+ 
+ 		if (context->encoder_ctx) {
+ 			if (avcodec_is_open(context->encoder_ctx)) {
+-#if (LIBAVCODEC_VERSION_MAJOR < LIBAVCODEC_7_V)
++#if (LIBAVCODEC_VERSION_MAJOR < LIBAVCODEC_V)
+ 				avcodec_close(context->encoder_ctx);
+ #else
+ 				/* avcodec_close() will be called in avcodec_free_context() */
+@@ -1884,7 +1884,7 @@ static switch_status_t switch_h264_destroy(switch_codec_t *codec)
+ 	switch_buffer_destroy(&context->nalu_buffer);
+ 	if (context->decoder_ctx) {
+ 		if (avcodec_is_open(context->decoder_ctx)) {
+-#if (LIBAVCODEC_VERSION_MAJOR < LIBAVCODEC_7_V)
++#if (LIBAVCODEC_VERSION_MAJOR < LIBAVCODEC_V)
+ 				avcodec_close(context->decoder_ctx);
+ #else
+ 				/* avcodec_close() will be called in avcodec_free_context() */
+@@ -1899,7 +1899,7 @@ static switch_status_t switch_h264_destroy(switch_codec_t *codec)
+ 
+ 	if (context->encoder_ctx) {
+ 		if (avcodec_is_open(context->encoder_ctx)) {
+-#if (LIBAVCODEC_VERSION_MAJOR < LIBAVCODEC_7_V)
++#if (LIBAVCODEC_VERSION_MAJOR < LIBAVCODEC_V)
+ 			avcodec_close(context->encoder_ctx);
+ #else
+ 			/* avcodec_close() will be called in avcodec_free_context() */
+diff --git a/src/mod/applications/mod_av/avformat.c b/src/mod/applications/mod_av/avformat.c
+index d617a52dfe..ed0998f472 100644
+--- a/src/mod/applications/mod_av/avformat.c
++++ b/src/mod/applications/mod_av/avformat.c
+@@ -1527,7 +1527,7 @@ static switch_status_t open_input_file(av_file_context_t *context, switch_file_h
+ 
+ 		switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_ERROR, "Could not open input audio codec channel 2 (error '%s')\n", get_error_text(error, ebuf, sizeof(ebuf)));
+ 		if ((cc = av_get_codec_context(&context->audio_st[0]))) {
+-#if (LIBAVCODEC_VERSION_MAJOR < LIBAVCODEC_7_V)
++#if (LIBAVCODEC_VERSION_MAJOR < LIBAVCODEC_V)
+ 			avcodec_close(cc);
+ #else
+ 			/* avcodec_close() will be called in avcodec_free_context() */

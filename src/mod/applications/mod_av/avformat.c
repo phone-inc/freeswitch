@@ -1527,7 +1527,7 @@ static switch_status_t open_input_file(av_file_context_t *context, switch_file_h
 
 		switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_ERROR, "Could not open input audio codec channel 2 (error '%s')\n", get_error_text(error, ebuf, sizeof(ebuf)));
 		if ((cc = av_get_codec_context(&context->audio_st[0]))) {
-#if (LIBAVCODEC_VERSION_MAJOR < LIBAVCODEC_7_V)
+#if (LIBAVCODEC_VERSION_MAJOR < LIBAVCODEC_V)
 			avcodec_close(cc);
 #else
 			/* avcodec_close() will be called in avcodec_free_context() */
